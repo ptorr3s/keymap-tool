@@ -6,7 +6,6 @@
   "dependencies": {
     "msexcel-builder": "^0.0.2",
     "msexcel-builder-colorfix": "^0.0.2",
-    "inquirer": "^0.8.4",
     "colors": "^1.1.0"
   },
   "devDependencies": {},

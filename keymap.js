@@ -1,7 +1,6 @@
 var excelbuilder = require('msexcel-builder');
 var fs = require('fs');
-var colors = require('colors')
-var inquirer = require('inquirer')
+var colors = require('colors');
 
 var presentation_id_map,
     slide_map,
