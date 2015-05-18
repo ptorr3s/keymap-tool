@@ -1,0 +1,18 @@
+{
+  "name": "keymap",
+  "version": "1.0.0",
+  "description": "creates a excell document with key message map",
+  "main": "keymap.js",
+  "dependencies": {
+    "msexcel-builder": "^0.0.2",
+    "msexcel-builder-colorfix": "^0.0.2",
+    "inquirer": "^0.8.4",
+    "colors": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node keymap <<presentation 1>> <<presentation 2>> etc ..."
+  },
+  "author": "p torres",
+  "license": "ISC"
+}
