@@ -18,10 +18,14 @@ var presentation_id = [],
 
 if(process.argv[2] != undefined || process.argv[2] != null){ // check if a presentation ID is passed
     var keymessages_id = []; // array for presentations IDs
-    for(var m = 2; m <= process.argv.length - 1; m++ ){
-      keymessages_id.push(process.argv[m]);
+    if(process.argv[2] == 'test'){
+      checkForFiles();
+    }else{
+      for(var m = 2; m <= process.argv.length - 1; m++ ){
+        keymessages_id.push(process.argv[m]);
+      }
+      createKeymessageMap.apply(this, keymessages_id)
     }
-    createKeymessageMap.apply(this, keymessages_id)
 }else{
   console.log("NO PRESENTATION ID PROVIDED" .red.underline)
 }
