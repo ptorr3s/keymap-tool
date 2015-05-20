@@ -6,7 +6,8 @@ var presentation_id_map,
     slide_map,
     keymessage_map;
 
-var presentation_id = [],
+var keymap_id = [],
+    presentation_id = [],
     presentation_slides =[],
     _product = [],
     _external_id = [],
@@ -71,8 +72,7 @@ function checkForFiles(){
 
 // Create key message map
 function createKeymessageMap(){
-  presentation_id = [].slice.call(arguments);
-
+  keymap_id = [].slice.call(arguments);
   presentation_id_map = fs.readFileSync('src/parameters/presentation.json');
   presentation_id_map = JSON.parse(presentation_id_map)
 
@@ -82,22 +82,28 @@ function createKeymessageMap(){
   keymessage_map = fs.readFileSync('src/parameters/keymessage.json');
   keymessage_map = JSON.parse(keymessage_map);
 
+    for (var h = 0; h <= presentation_id_map.presentation.length - 1; h++){
+      presentation_id.push(presentation_id_map.presentation[h].id)
+    }
     // Find product name, presentation slides, external ID
-    for (var y = 0; y < presentation_id.length; y++){
-      // console.log(presentation_id_map.presentation[presentation_id[y] - 1])
-      if(presentation_id_map.presentation[presentation_id[y] - 1] != undefined){
-        for (var s = 0; s < presentation_id_map.presentation[presentation_id[y] - 1].slide.length; s++){
-          presentation_slides.push(presentation_id_map.presentation[presentation_id[y] - 1].slide[s]);
-          _product.push(presentation_id_map.presentation[presentation_id[y] - 1].name);
-          if(presentation_id_map.presentation[presentation_id[y] - 1].external_id === undefined){
-            _external_id.push('MISSING_EXTID');
-          }else{
-            _external_id.push(presentation_id_map.presentation[presentation_id[y] - 1].external_id);
+    for (var c = 0; c < keymap_id.length; c++){
+      if(presentation_id_map.presentation[keymap_id[c] - 1] != undefined){
+        for (var y = 0; y < presentation_id.length; y++){
+          if(presentation_id_map.presentation[y].id == keymap_id[c]){
+            for (var s = 0; s <= presentation_id_map.presentation[y].slide.length - 1; s++){
+              presentation_slides.push(presentation_id_map.presentation[y].slide[s]);
+              _product.push(presentation_id_map.presentation[y].name);
+              if(presentation_id_map.presentation[y].external_id === undefined){
+                _external_id.push('MISSING_EXTID');
+              }else{
+                _external_id.push(presentation_id_map.presentation[y].external_id);
+              }
+            }
           }
         }
-        console.log(colors.yellow('PRESENTATION WITH ID ' + arguments[y] + ' FOUND'))
+        console.log(colors.yellow('PRESENTATION WITH ID ' + arguments[c] + ' FOUND'))
       }else{
-        console.log(colors.red('PRESENTATION WITH ID ' + arguments[y] .bold + ' NOT FOUND'));
+        console.log(colors.red('PRESENTATION WITH ID ' + arguments[c] .bold + ' NOT FOUND'));
         if(arguments.length <= 1) {
           return false;
         }
@@ -105,7 +111,7 @@ function createKeymessageMap(){
     }
     // Find slide name, slide description, slide keymessage
     for (a = 0; a < presentation_slides.length; a ++){
-      for (var q = 0; q < slide_map.slide.length - 1; q++){
+      for (var q = 0; q < slide_map.slide.length; q++){
         if(presentation_slides[a] === slide_map.slide[q].id){
           slide_id.push(slide_map.slide[q].id)
           slide_name.push(slide_map.slide[q].name);
